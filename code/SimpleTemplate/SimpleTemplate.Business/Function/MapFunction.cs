@@ -29,10 +29,10 @@ namespace SimpleTemplate.Business.Function
             }
 
             //read from the data the value of the variable
-            string directValue = Helper.JsonFetch.Fetch(this.Data, this.InputVariable.FunctionArguments[0]).ToString();
+            string directValue = Helper.JsonHelper.Fetch(this.Data, this.InputVariable.FunctionArguments[0]).ToString();
 
             //return the mapping for the variable value
-            return this.Mapping[directValue].ToString();
+            return (this.Mapping[directValue] != null)?this.Mapping[directValue].ToString():directValue;
         }
     }
 }

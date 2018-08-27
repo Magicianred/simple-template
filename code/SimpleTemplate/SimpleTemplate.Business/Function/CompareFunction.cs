@@ -27,36 +27,12 @@ namespace SimpleTemplate.Business.Function
             }
 
             JsonDiffPatchDotNet.JsonDiffPatch jdp = new JsonDiffPatchDotNet.JsonDiffPatch();
-            var left = Helper.JsonFetch.Fetch(this.Data, this.InputVariable.FunctionArguments[0]);
-            var right = Helper.JsonFetch.Fetch(this.Data, this.InputVariable.FunctionArguments[1]);
+            var left = Helper.JsonHelper.Fetch(this.Data, this.InputVariable.FunctionArguments[0]);
+            var right = Helper.JsonHelper.Fetch(this.Data, this.InputVariable.FunctionArguments[1]);
 
             JToken patch = jdp.Diff(left, right);
 
-            StringBuilder result = new StringBuilder();
-            writeCompareResult(patch, result);
-
-            return result.ToString();
-        }
-
-        private void writeCompareResult(JToken patch, StringBuilder result)
-        {
-            foreach (JToken item in patch.Values())
-            {
-                if ((item.Type == JTokenType.Object || item.Type == JTokenType.Array) && item.HasValues)
-                {
-                    writeCompareResult(item, result);
-                }
-
-                if(item.Type == JTokenType.Property)
-                {
-                    string line = $" the value of {((JProperty)item).Name} is {((JProperty)item).Value} ";
-                    result.AppendLine(line);
-                }
-                else
-                {
-                    result.AppendLine(item.ToString());
-                }
-            }
+            return Helper.JsonHelper.DescribeJsonComparison(patch);;
         }
     }
 }

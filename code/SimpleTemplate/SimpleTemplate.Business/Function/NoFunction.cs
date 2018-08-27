@@ -21,7 +21,7 @@ namespace SimpleTemplate.Business.Function
 
         public string CalculateValue()
         {
-            return Helper.JsonFetch.Fetch(this.Data, this.InputVariable.Name).ToString();
+            return Helper.JsonHelper.Fetch(this.Data, this.InputVariable.Name).ToString();
         }
     }
 }
