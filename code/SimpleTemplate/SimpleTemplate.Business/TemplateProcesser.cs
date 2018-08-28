@@ -57,7 +57,7 @@ namespace SimpleTemplate.Business
         {
             List<Model.Variable> variables = new List<Model.Variable>();
 
-            int index1 = 0, index2 = 0;
+            int index1 = -1, index2 = 0;
 
             do
             {
