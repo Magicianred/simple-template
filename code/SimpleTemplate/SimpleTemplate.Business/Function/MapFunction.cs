@@ -23,13 +23,18 @@ namespace SimpleTemplate.Business.Function
 
         public string CalculateValue()
         {
-            if(this.Mapping == null || this.Mapping.Count == 0 || this.InputVariable == null || this.InputVariable.FunctionArguments == null || this.InputVariable.FunctionArguments.Count == 0)
+            if(this.InputVariable == null || this.InputVariable.FunctionArguments == null || this.InputVariable.FunctionArguments.Count == 0 || this.Data == null)
             {
                 return string.Empty;
             }
 
             //read from the data the value of the variable
             string directValue = Helper.JsonHelper.Fetch(this.Data, this.InputVariable.FunctionArguments[0]).ToString();
+
+            if(this.Mapping == null || this.Mapping.Count == 0)
+            {
+                return directValue;
+            }
 
             //return the mapping for the variable value
             return (this.Mapping[directValue] != null)?this.Mapping[directValue].ToString():directValue;
