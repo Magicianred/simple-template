@@ -11,7 +11,7 @@ namespace SimpleTest.UnitTests
         [TestMethod]
         public void TestNormal()
         {
-            SimpleTemplate.Model.Variable v = new SimpleTemplate.Model.Variable() { Input = "UserID" };
+            SimpleTemplate.Business.Model.Variable v = new SimpleTemplate.Business.Model.Variable() { Input = "UserID" };
 
             Assert.AreEqual(v.IsFunction, false);
             Assert.AreEqual(v.FunctionName, string.Empty);
@@ -22,7 +22,7 @@ namespace SimpleTest.UnitTests
         [TestMethod]
         public void TestFunction1()
         {
-            SimpleTemplate.Model.Variable v = new SimpleTemplate.Model.Variable() { Input = "$Compare$OldDiscount,NewDiscount" };
+            SimpleTemplate.Business.Model.Variable v = new SimpleTemplate.Business.Model.Variable() { Input = "$Compare$OldDiscount,NewDiscount" };
             List<string> expectedArguments = new List<string>() { "OldDiscount", "NewDiscount" };
 
             Assert.AreEqual(v.IsFunction, true);
@@ -36,7 +36,7 @@ namespace SimpleTest.UnitTests
         [TestMethod]
         public void TestFunction2()
         {
-            SimpleTemplate.Model.Variable v = new SimpleTemplate.Model.Variable() { Input = "$Compare$" };
+            SimpleTemplate.Business.Model.Variable v = new SimpleTemplate.Business.Model.Variable() { Input = "$Compare$" };
 
             Assert.AreEqual(v.IsFunction, true);
             Assert.AreEqual(v.FunctionName, "Compare");
@@ -47,7 +47,7 @@ namespace SimpleTest.UnitTests
         [TestMethod]
         public void TestFunction3()
         {
-            SimpleTemplate.Model.Variable v = new SimpleTemplate.Model.Variable() { Input = "$Map$UserType" };
+            SimpleTemplate.Business.Model.Variable v = new SimpleTemplate.Business.Model.Variable() { Input = "$Map$UserType" };
             List<string> expectedArguments = new List<string>() { "UserType" };
 
             Assert.AreEqual(v.IsFunction, true);

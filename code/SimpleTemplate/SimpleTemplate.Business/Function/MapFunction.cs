@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
-using SimpleTemplate.Model;
+using SimpleTemplate.Business.Model;
 
 namespace SimpleTemplate.Business.Function
 {
@@ -13,7 +13,7 @@ namespace SimpleTemplate.Business.Function
     {
         public Model.Variable InputVariable { get; set; }
         public JObject Data { get; set; }
-        public Hashtable Mapping { get; set; }
+        public List<Model.VariableMap> Mapping { get; set; }
 
         public MapFunction(Model.Variable inputVariable, JObject data)
         {
@@ -37,7 +37,16 @@ namespace SimpleTemplate.Business.Function
             }
 
             //return the mapping for the variable value
-            return (this.Mapping[directValue] != null)?this.Mapping[directValue].ToString():directValue;
+            Model.VariableMap varMap = this.Mapping.Where(v => v.Name == this.InputVariable.FunctionArguments[0] && v.Value == directValue).SingleOrDefault();
+
+            if(varMap.Name == string.Empty)
+            {
+                return directValue;
+            }
+            else
+            {
+                return varMap.MappedValue;
+            }
         }
     }
 }

@@ -25,11 +25,11 @@ namespace SimpleTemplate.Business
             }
         }
         public JObject Data { get; set; }
-        public Hashtable Mapping { get; set; }
+        public List<Model.VariableMap> Mapping { get; set; }
         #endregion
 
         #region contructors
-        public TemplateProcesser(string template, JObject data, Hashtable mapping = null)
+        public TemplateProcesser(string template, JObject data, List<Model.VariableMap> mapping = null)
         {
             this.Template = template;
             this.Data = data;
@@ -40,7 +40,7 @@ namespace SimpleTemplate.Business
         #endregion
 
         #region private methods
-        private string process(string template, JObject data, Hashtable mapping = null)
+        private string process(string template, JObject data, List<Model.VariableMap> mapping = null)
         {
             this._Variables.AddRange(extractVariables(template));
 

@@ -13,7 +13,7 @@ namespace SimpleTemplate.Business.Function
         const string FUNCTION_MAP = "map";
         const string FUNCTION_COMPARE = "compare";
 
-        public static IFunction GetFunction(Model.Variable inputVariable, JObject data, Hashtable mapping = null)
+        public static IFunction GetFunction(Model.Variable inputVariable, JObject data, List<Model.VariableMap> mapping = null)
         {
             if (inputVariable.IsFunction)
             {

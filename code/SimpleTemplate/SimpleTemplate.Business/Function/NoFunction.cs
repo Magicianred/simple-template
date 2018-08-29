@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
-using SimpleTemplate.Model;
+using SimpleTemplate.Business.Model;
 
 namespace SimpleTemplate.Business.Function
 {
