@@ -80,24 +80,24 @@ namespace SimpleTemplate.Business.Helper
 
                     string description = string.Empty;
                     string parentName = readName(item.Parent.Path);
-                    if(item.Parent.Parent != null)
+                    if (item.Parent.Parent != null)
                     {
                         parentName = readName(item.Parent.Parent.Path);
                     }
 
                     bool invalidParentName = System.Text.RegularExpressions.Regex.IsMatch(parentName, REMOVE_PATTERN) || System.Text.RegularExpressions.Regex.IsMatch(parentName, STANDARD_PATTERN);
 
-                    if(invalidParentName && item.Parent.Parent.Parent != null)
+                    if (invalidParentName && item.Parent.Parent.Parent != null)
                     {
                         parentName = readName(item.Parent.Parent.Parent.Path);
                     }
 
-                    if(invalidParentName && item.Parent.Parent.Parent.Parent != null)
+                    if (invalidParentName && item.Parent.Parent.Parent.Parent != null)
                     {
                         parentName = readName(item.Parent.Parent.Parent.Parent.Path);
                     }
 
-                    if(parentName != string.Empty)
+                    if (parentName != string.Empty)
                     {
                         description = $"{makeItMoreNatural(parentName)} modified {makeItMoreNatural(name)} from {item.Values().First()} to {item.Values().Last()}";
                     }
@@ -118,13 +118,13 @@ namespace SimpleTemplate.Business.Helper
                     //array with 3 values, and the last two values are zeros. It old item removed
 
                     string parentName = readName(item.Parent.Path);
-                    if(item.Parent.Parent != null)
+                    if (item.Parent.Parent != null)
                     {
                         parentName = readName(item.Parent.Parent.Path);
                     }
 
                     string description = describeObjectProperties(parentName, "removed with the criteria", ((JObject)((JArray)item)[0]));
-                    
+
                     compResults.Add(new JsonComparisonResult()
                     {
                         Description = description.ToString(),
@@ -132,22 +132,31 @@ namespace SimpleTemplate.Business.Helper
                         Path = item.Path
                     });
                 }
-                else if(item.Type == JTokenType.Array && ((JArray)item).Count == 1 && ((JArray)item).HasValues)
+                else if (item.Type == JTokenType.Array && ((JArray)item).Count == 1 && ((JArray)item).HasValues && (((JArray)item)[0]).Type == JTokenType.Object)
                 {
                     //array with one object. It is new item added
 
                     string parentName = readName(item.Parent.Path);
-                    if(item.Parent.Parent != null)
+                    if (item.Parent.Parent != null)
                     {
                         parentName = readName(item.Parent.Parent.Path);
                     }
 
                     string description = describeObjectProperties(parentName, "added with the criteria", ((JObject)((JArray)item)[0]));
-                    
+
                     compResults.Add(new JsonComparisonResult()
                     {
                         Description = description.ToString(),
                         Name = parentName,
+                        Path = item.Path
+                    });
+                }
+                else if (item.Type == JTokenType.Array && ((JArray)item).Count == 1 && ((JArray)item).HasValues && (((JArray)item)[0]).Type != JTokenType.Object)
+                {
+                    compResults.Add(new JsonComparisonResult()
+                    {
+                        Description = $"new {makeItMoreNatural(name)} added with {(((JArray)item)[0]).Value<string>()}",
+                        Name = name,
                         Path = item.Path
                     });
                 }
