@@ -21,7 +21,9 @@ namespace SimpleTemplate.Business.Function
 
         public string CalculateValue()
         {
-            return Helper.JsonHelper.Fetch(this.Data, this.InputVariable.Name).ToString();
+            JToken value = Helper.JsonHelper.Fetch(this.Data, this.InputVariable.Name);
+            
+            return (value != null)?value.ToString():this.InputVariable.Name;
         }
     }
 }
