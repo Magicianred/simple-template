@@ -74,7 +74,7 @@ namespace SimpleTemplate.Business.Helper
                         getChangesItems(item, compResults);
                     }
                 }
-                else if (item.Type == JTokenType.Array && item.Values().Count() == 2)
+                else if (item.Type == JTokenType.Array && ((JArray)item).Count == 2)
                 {
                     //array with 2 values, it is modified values from old value to new value
 
